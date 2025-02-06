@@ -3,20 +3,30 @@ const express = require("express");
 const { default: helmet } = require("helmet");
 
 const connectDB = require("./utils/dbConnection");
+const authRoutes = require("./routes/authRoutes");
+const patientRoutes = require("./routes/patientRoutes");
+
+const errorHandler = require("./middlwares/errorHandler");
 
 connectDB();
 
 const app = express();
-
 app.use(express.json());
-
 app.use(helmet());
-// console.log(first);
+
+app.use("/api/auth", authRoutes);
+app.use("/api/patients", patientRoutes);
+// app.use("/api/pharmacists");
+// app.use("/api/pharmacies");
+// app.use("/api/prescriptions");
+
 app.use("*", (req, res) => {
   res.status(404).json({
     message: "Route not exist",
   });
 });
+
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
