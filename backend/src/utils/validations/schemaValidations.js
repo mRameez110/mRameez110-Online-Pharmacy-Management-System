@@ -18,6 +18,17 @@ const loginValidationSchema = joi
   })
   .options({ abortEarly: true });
 
+const updatePatientValidationSchema = joi
+  .object({
+    userName: joi.string().min(3).max(30).optional(),
+    email: joi.string().email().optional(),
+    fullName: joi.string().min(3).max(15).optional(),
+    age: joi.number().integer().min(0).max(120).optional(),
+    contact: joi.string().min(10).max(15).optional(),
+  })
+  .strict() // Ensures no extra fields are allowed
+  .options({ abortEarly: true });
+
 const validation = (dataObject, validationSchema) => {
   const { error } = validationSchema.validate(dataObject);
   if (error) {
@@ -29,5 +40,6 @@ const validation = (dataObject, validationSchema) => {
 module.exports = {
   registerValidationSchema,
   loginValidationSchema,
+  updatePatientValidation: updatePatientValidationSchema,
   validation,
 };
