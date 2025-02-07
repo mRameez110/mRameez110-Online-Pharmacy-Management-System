@@ -23,6 +23,21 @@ class BadRequestError extends AppError {
   }
 }
 
+class ForbiddenError extends AppError {
+  constructor(
+    message = "You are not allowed to perform this action",
+    errorCode = 403
+  ) {
+    super(message, errorCode);
+  }
+}
+
+class NotFoundError extends AppError {
+  constructor(message = "No Records found", errorCode = 404) {
+    super(message, errorCode);
+  }
+}
+
 class InvalidCredentialError extends AppError {
   constructor(message = "Invalid Credential's", errorCode = 400) {
     super(message, errorCode);
@@ -49,6 +64,8 @@ module.exports = {
   RouteNotFoundError,
   UserAlreadyExistError,
   BadRequestError,
+  ForbiddenError,
+  NotFoundError,
   ValidationError,
   InvalidCredentialError,
   MailError,
